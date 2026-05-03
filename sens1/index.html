@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Nature Scene -D/N sea</title>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="scene">
+        <!-- Sky Background -->
+        <div id="sky"></div>
+
+        <!-- Celestial Layer -->
+        <div id="celestial-layer">
+            <div id="sun" class="celestial-body">
+                <i class="far fa-sun"></i>
+            </div>
+            <div id="moon" class="celestial-body">
+                <i class="far fa-moon"></i>
+            </div>
+            <div id="stars-container"></div>
+        </div>
+
+        <!-- Clouds Layer -->
+        <div id="clouds-layer"></div>
+
+        <!-- Objects Layer -->
+        <div id="objects-layer">
+            <div id="plane" class="moving-object">
+                <i class="far fa-plane"></i>
+            </div>
+
+            <div id="boat" class="moving-object">
+                <i class="far fa-sailboat"></i>
+            </div>
+        </div>
+
+        <!-- Sea Layer -->
+        <div id="sea-layer">
+            <!-- Base water color -->
+            <div id="sea-base"></div>
+            <!-- Back wave -->
+            <div id="wave-back"></div>
+            <!-- Front wave -->
+            <div id="wave-front"></div>
+        </div>
+
+        <!-- Rocket Layer-->
+        <div id="rocket" class="moving-object">
+            <i class="fas fa-rocket"></i>
+        </div>
+    </div>
+
+    <!-- UI Controls -->
+    <div id="ui-controls">
+        <button type="button" id="btn-slower">
+            <i class="fas fa-backward"></i> Slower
+        </button>
+        <span id="speed-display">Speed: 1x</span>
+        <button type="button" id="btn-faster">
+            <i class="fas fa-forward"></i> Faster
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
