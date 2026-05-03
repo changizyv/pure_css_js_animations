@@ -1,0 +1,260 @@
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('../fonts/Vazirmatn-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face{
+    font-family: "Font Awesome 6";
+    src: url('../fonts/fa-light-300.woff2') format('woff2');
+    font-weight:normal;
+    font-style:normal;
+    font-display:swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    background-color: #000;
+}
+
+#scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Sky */
+#sky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    /* A single continuous gradient with 4 key phases */
+    background: linear-gradient(
+        to bottom,
+        rgb(15, 32, 50) 0%,   /* Midnight */
+        rgb(30, 60, 100) 25%,  /* Dusk */
+        rgb(60, 120, 200) 50%,  /* Sunrise */
+        rgb(30, 60, 100) 75%,  /* Noon */
+        rgb(15, 32, 50) 100%  /* Morning */
+    );
+    /* Make the gradient large to allow scrolling through it */
+    background-size: 100% 400%;
+    transition: none; /* Disable CSS transition for JS control */
+}
+
+/* Sea Layer - Container */
+#sea-layer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    z-index: 0; 
+    overflow: hidden;
+}
+
+/* Base water color - This is the actual sea surface */
+#sea-base {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #006994; /* Default day color */
+    transition: background 1s ease;
+    z-index: -2; 
+}
+
+/* Wave styles */
+.wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background-repeat: repeat-x;
+    background-size: 50% 100%;
+    /* SVG Wave Pattern */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 88.7'%3E%3Cpath d='M800 56.9c-155.5 0-210.9-50-418.5-50C182 6.9 100 57.4 0 57.4V88.7h800V66.9c-34.9 0-55.9 9-55.9 9z' fill='%23ffffff'/%3E%3C/svg%3E");
+    animation: wave-move 10s linear infinite;
+    opacity: 0.8;
+    z-index: 1; 
+}
+
+#wave-back {
+    position: absolute;
+    z-index: 2;
+    animation-duration: 15s;
+    bottom: 5px; 
+    opacity: 0.4;
+    width: 100vw;
+}
+
+#wave-front {
+    position: absolute;
+    z-index: 3;
+    animation-duration: 8s;
+    opacity: 0.8;
+    width: 100vw;
+}
+
+@keyframes wave-move {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Celestial Bodies */
+#celestial-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.celestial-body {
+    position: absolute;
+    font-size: 5rem;
+    top: 10%;
+    transition: opacity 0.5s ease;
+}
+
+#sun {
+    color: #ffcc00;
+    text-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
+}
+
+#moon {
+    color: #f4f6f0;
+    text-shadow: 0 0 15px rgba(244, 246, 240, 0.6);
+}
+
+/* Stars */
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    width: 2px;
+    height: 2px;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Clouds */
+#clouds-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.cloud {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.8);
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.1));
+    text-shadow: 0 0 10px rgba(255, 255, 255, 1);
+}
+
+/* Objects */
+#objects-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.moving-object {
+    position: absolute;
+    transition: color 0.5s ease;
+}
+
+#plane {
+    font-size: 3rem;
+    color: #000000;
+    text-shadow: 0 0 15px rgba(6, 8, 0, 0.6);
+}
+
+#rocket {
+    font-size: 2rem;
+    color: #e74c3c;
+    z-index: -2;
+}
+
+#boat {
+    position:absolute;
+    font-size: 4rem;
+    bottom: 25%; /* Slightly above the sea bottom */
+    color: #b9b8b8;
+    text-shadow: 0 0 15px rgba(244, 246, 240, 0.6);
+    z-index: 4;
+}
+
+/* UI Controls */
+#ui-controls {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px 15px;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+}
+
+#ui-controls button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+#ui-controls button:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+#speed-display {
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .celestial-body { font-size: 3rem; }
+    .cloud { font-size: 2rem; }
+    #boat { font-size: 3rem; }
+    #plane { font-size: 2rem; }
+    #rocket { font-size: 1.5rem; }
+}
